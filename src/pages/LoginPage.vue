@@ -8,13 +8,19 @@
         </div>
       </q-card-section>
       <q-card-section class="flex column">
-        <q-input
-          class="q-mb-sm"
-          filled
-          placeholder="Placeholder"
-          :dense="true"
-        />
-        <q-input filled placeholder="Placeholder" :dense="true" />
+        <q-input class="q-mb-sm" filled placeholder="Email" :dense="true" />
+        <q-input filled placeholder="Password" :dense="true" />
+        <div class="text-body2 text-right q-mt-sm text-grey">
+          Forgot Password?
+        </div>
+      </q-card-section>
+      <q-card-section class="flex column">
+        <q-btn rounded color="secondary" label="LOGIN" />
+      </q-card-section>
+      <q-card-section>
+        <div class="text-body2 text-center text-grey">
+          Don't have account? Register!
+        </div>
       </q-card-section>
     </q-card>
   </q-page>
