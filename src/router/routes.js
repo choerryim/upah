@@ -9,6 +9,11 @@ const routes = [
     ],
   },
   {
+    path: "/helper/",
+    component: () => import("layouts/HelperLayout.vue"),
+    children: [{ path: "", component: () => import("pages/HelperPage.vue") }],
+  },
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
