@@ -1,6 +1,10 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-card class="my card">
+  <q-page class="register flex flex-center">
+    <div class="absolute bg">
+      <div class="section bg-primary"></div>
+      <div class="section bg-secondary"></div>
+    </div>
+    <q-card class="login-card flex column justify-center">
       <q-card-section class="flex column">
         <div class="text-h5 text-center q-mb-xs">Create Account</div>
         <div class="text-body2 text-center text-grey">
