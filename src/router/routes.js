@@ -20,6 +20,14 @@ const routes = [
         path: "upahdetails",
         component: () => import("pages/UpahDetailsPage.vue"),
       },
+      {
+        path: "detailsprofile",
+        component: () => import("pages/UpahDetailsProfilePage.vue"),
+      },
+      {
+        path: "activity",
+        component: () => import("pages/HelperActivityPage.vue"),
+      },
     ],
   },
   {

@@ -8,7 +8,7 @@
           </q-avatar>
         </div>
 
-        <div>
+        <div class="col">
           <div class="text-body1 text-bold text-white">Name</div>
           <q-icon
             class="star-text arrow-text text-white"

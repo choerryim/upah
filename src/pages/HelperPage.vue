@@ -1,6 +1,6 @@
 <template>
   <q-page class="helper-page">
-    <q-card flat class="header-card">
+    <q-card flat class="header-card q-mb-lg">
       <q-card-section class="row reverse" style="padding-right: 0">
         <q-card
           flat
