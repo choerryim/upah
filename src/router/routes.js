@@ -14,7 +14,13 @@ const routes = [
   {
     path: "/helper/",
     component: () => import("layouts/HelperLayout.vue"),
-    children: [{ path: "", component: () => import("pages/HelperPage.vue") }],
+    children: [
+      { path: "", component: () => import("pages/HelperPage.vue") },
+      {
+        path: "upahdetails",
+        component: () => import("pages/UpahDetailsPage.vue"),
+      },
+    ],
   },
   {
     path: "/",

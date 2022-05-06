@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <upah-card> </upah-card>
+    <upah-card username="Aina Aqilah" description="Cuci tandas" />
   </q-page>
 </template>
 <script>
