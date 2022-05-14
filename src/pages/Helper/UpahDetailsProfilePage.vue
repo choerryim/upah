@@ -37,7 +37,7 @@
   </q-page>
 </template>
 <script>
-import ReviewCard from "../components/ReviewCard.vue";
+import ReviewCard from "components/ReviewCard.vue";
 
 export default {
   components: {

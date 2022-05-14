@@ -13,7 +13,7 @@
   </q-page>
 </template>
 <script>
-import UpahCard from "../components/UpahCard.vue";
+import UpahCard from "components/UpahCard.vue";
 
 export default {
   components: {

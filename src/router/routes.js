@@ -8,25 +8,29 @@ const routes = [
         path: "register",
         component: () => import("pages/Login/RegisterPage.vue"),
       },
-      { path: "rolepage", component: () => import("pages/RolePage.vue") },
+      { path: "rolepage", component: () => import("pages/Login/RolePage.vue") },
     ],
   },
   {
     path: "/helper/",
     component: () => import("layouts/HelperLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/HelperPage.vue") },
+      { path: "", component: () => import("pages/Helper/HelperPage.vue") },
       {
         path: "upahdetails",
-        component: () => import("pages/UpahDetailsPage.vue"),
+        component: () => import("pages/Helper/UpahDetailsPage.vue"),
       },
       {
         path: "detailsprofile",
-        component: () => import("pages/UpahDetailsProfilePage.vue"),
+        component: () => import("pages/Helper/UpahDetailsProfilePage.vue"),
       },
       {
         path: "activity",
-        component: () => import("pages/HelperActivityPage.vue"),
+        component: () => import("pages/Helper/HelperActivityPage.vue"),
+      },
+      {
+        path: "userprofile",
+        component: () => import("pages/Helper/UserProfilePage.vue"),
       },
     ],
   },
