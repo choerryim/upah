@@ -35,6 +35,11 @@ const routes = [
     ],
   },
   {
+    path: "/client/",
+    component: () => import("layouts/ClientLayout.vue"),
+    children: [{ path: "", component: () => import("pages/Client/ClientPage.vue") }],
+  },
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/IndexPage.vue") }],

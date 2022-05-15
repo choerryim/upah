@@ -1,12 +1,12 @@
 <template>
-  <q-page class="helper-page">
-    <q-card flat class="column header-content q-mb-lg">
-      <q-card-section class="col row reverse" style="padding-right: 0">
+  <q-page class="client-page">
+    <q-card flat class="clientheader-card q-mb-lg">
+      <q-card-section class="row reverse" style="padding-right: 0">
         <q-card
           flat
-          class="text-center bg-secondary col-4 role-button row justify-center items-center"
+          class="text-center bg-primary col-4 clientrole-button row justify-center items-center"
         >
-          <div class="text-h6 role-text">ROLE</div>
+          <div class="text-h6 clientrole-text">ROLE</div>
           <q-icon
             class="text-white arrow-text"
             name="chevron_right"
@@ -15,9 +15,9 @@
         </q-card>
       </q-card-section>
 
-      <q-card-section class="col q-ml-md" style="padding-top: 0">
-        <div class="text-h6 text-medium text-white">Welcome, NAME</div>
-        <div class="text-body2 text-weight-light text-white">
+      <q-card-section class="q-ml-md" style="padding-top: 0">
+        <div class="text-h6 text-medium darker-text">Welcome, NAME</div>
+        <div class="text-body2 text-weight-light darker-text">
           What would you like to do today?
         </div>
       </q-card-section>
@@ -36,7 +36,7 @@
       </div>
 
       <div class="row">
-        <q-card flat class="my-card col help-card">
+        <q-card flat class="my-card col client-card">
           <q-card-section>
             <div class="text-body2">Help someone today!</div>
           </q-card-section>

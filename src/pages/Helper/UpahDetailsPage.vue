@@ -1,6 +1,6 @@
 <template>
   <q-page class="helper-page">
-    <q-card flat class="header-card row justify-center">
+    <q-card flat class="header-content row justify-center">
       <q-card-section class="row justify-center">
         <div class="row col-3">
           <q-avatar style="width: 100%; height: 100%">

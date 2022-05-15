@@ -1,7 +1,5 @@
 <template>
-  <q-layout class="helper-page" view="hHh lpR fFf">
-    <div class="helper-header">
-    </div>
+  <q-layout view="hHh lpR fFf">
     <q-page-container>
       <router-view />
     </q-page-container>

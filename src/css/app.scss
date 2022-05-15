@@ -72,9 +72,21 @@
 }
 
 .helper-page {
-  .header-card {
+  .helper-header {
+    position: absolute;
     background-color: $primary;
+    content: "";
+    height: 16vh;
+    width: 100vw;
     border-radius: 0 0 30px 30px;
+  }
+
+  .header-content {
+    z-index: 99999;
+    background-color: transparent;
+    height: 16vh;
+    padding-bottom: 1.5em;
+    padding-top: 0.5em;
 
     .role-button {
       border-radius: 30px 0 0 30px;
@@ -97,6 +109,36 @@
     border-radius: 13px 13px 13px 13px;
   }
 }
+
+.client-page {
+  .clientheader-card{
+    background-color: $secondary;
+    border-radius: 0 0 30px 30px;
+
+    .clientrole-button {
+      border-radius: 30px 0 0 30px;
+
+      .clientrole-text {
+        text-shadow: 2px 2px 4px #9e9a9a;
+        color: white;
+      }
+
+      .clientarrow-text {
+        text-shadow: 1px 1px 4px #adabab;
+        color: white;
+      }
+      .darker-text{
+        color:#464646;
+      }
+    }
+  }
+}
+.client-card {
+  background-color: #FFEC9E;
+  color: #6a6a6a;
+  border-radius: 13px 13px 13px 13px;
+}
+
 
 .role-page {
   height: 100vh;
@@ -141,5 +183,4 @@
 
 .detailsprofile-card {
   border-radius: 50px 50px 50px 50px;
-  margin: 30px;
 }
