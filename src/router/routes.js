@@ -37,7 +37,21 @@ const routes = [
   {
     path: "/client/",
     component: () => import("layouts/ClientLayout.vue"),
-    children: [{ path: "", component: () => import("pages/Client/ClientPage.vue") }],
+    children: [
+      { path: "", component: () => import("pages/Client/ClientPage.vue") },
+      {
+        path: "clientupahdetails",
+        component: () => import("pages/Client/ClientUpahDetailsPage.vue"),
+      },
+      {
+        path: "addupah",
+        component: () => import("pages/Client/AddUpahPage.vue"),
+      },
+      {
+        path: "clientactivity",
+        component: () => import("pages/Client/ClientActivityPage.vue"),
+      },
+    ],
   },
   {
     path: "/",
