@@ -1,6 +1,6 @@
 <template>
   <q-page class="helper-page">
-    <q-card flat class="header-card">
+    <q-card flat class="header-content">
       <div class="text-h6 text-medium text-white text-center q-pa-xl">
         ACTIVITY
       </div>

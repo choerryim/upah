@@ -1,9 +1,9 @@
 <template>
-  <q-page class="helper-page">
-    <q-card flat class="header-content row justify-center">
-      <q-card-section class="row justify-center">
-        <div class="row col-3">
-          <q-avatar style="width: 100%; height: 100%">
+  <q-page class="helper-details-page">
+    <q-card flat class="header-content row">
+      <q-card-section class="row justify-center items-center">
+        <div class="row col-4 q-mr-lg">
+          <q-avatar style="width: 100%; height: auto">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
         </div>
@@ -21,7 +21,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card flat class="my-card q-ma-xl">
+    <q-card flat class="helper-details-body">
       <q-card-section class="text-bold text-body1 q-pb-xs">
         Title
       </q-card-section>

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="detailsprofile-page">
     <q-card class="detailsprofile-card">
       <q-card-section>
         <q-card-section class="row justify-center">
@@ -29,9 +29,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card-section class="text-bold text-body1 q-pb-sm q-pl-lg q-pt-none">
-      Reviews
-    </q-card-section>
+    <q-card-section class="text-bold text-body1"> Reviews </q-card-section>
 
     <review-card username="Mirooon" review="baik pak" />
   </q-page>

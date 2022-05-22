@@ -85,7 +85,6 @@
     z-index: 99999;
     background-color: transparent;
     height: 16vh;
-    padding-bottom: 1.5em;
     padding-top: 0.5em;
 
     .role-button {
@@ -111,7 +110,7 @@
 }
 
 .client-page {
-  .clientheader-card{
+  .clientheader-card {
     background-color: $secondary;
     border-radius: 0 0 30px 30px;
 
@@ -127,18 +126,17 @@
         text-shadow: 1px 1px 4px #adabab;
         color: white;
       }
-      .darker-text{
-        color:#464646;
+      .darker-text {
+        color: #464646;
       }
     }
   }
 }
 .client-card {
-  background-color: #FFEC9E;
+  background-color: #ffec9e;
   color: #6a6a6a;
   border-radius: 13px 13px 13px 13px;
 }
-
 
 .role-page {
   height: 100vh;
@@ -181,6 +179,18 @@
   }
 }
 
-.detailsprofile-card {
-  border-radius: 50px 50px 50px 50px;
+.detailsprofile-page {
+  padding: 3em 2.5em 1.5em 1.5em;
+
+  .detailsprofile-card {
+    border-radius: 50px 50px 50px 50px;
+  }
+}
+
+.helper-details-page {
+  padding: 0 2em 0 2em;
+
+  .helper-details-body {
+    margin-top: 1.5em;
+  }
 }
