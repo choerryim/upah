@@ -1,15 +1,33 @@
+import router from ".";
+
 const routes = [
   {
     path: "/login/",
     component: () => import("layouts/LoginLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Login/LoginPage.vue") },
+      {
+        path: "",
+        component: () => import("pages/Login/LoginPage.vue"),
+        meta: {
+          noAuth: true,
+        },
+      },
       {
         path: "register",
         component: () => import("pages/Login/RegisterPage.vue"),
+        meta: {
+          noAuth: true,
+        },
       },
-      { path: "rolepage", component: () => import("pages/Login/RolePage.vue") },
+      {
+        name: "rolepage",
+        path: "rolepage",
+        component: () => import("pages/Login/RolePage.vue"),
+      },
     ],
+    meta: {
+      noAuth: true,
+    },
   },
   {
     path: "/helper/",

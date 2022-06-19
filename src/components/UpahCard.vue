@@ -1,7 +1,12 @@
 <template>
-  <q-card flat bordered class="upah-card q-mx-md">
+  <q-card
+    flat
+    :bordered="!bottomborder"
+    class="upah-card"
+    :class="{ 'bordered-right': bottomborder }"
+  >
     <q-card-section class="row">
-      <div class="col-2">
+      <div class="col-2 q-mr-md">
         <q-avatar>
           <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
         </q-avatar>
@@ -27,6 +32,10 @@
 <script>
 export default {
   props: {
+    bottomborder: {
+      type: Boolean,
+      default: false,
+    },
     username: {
       type: String,
       default: "Missing name",
@@ -47,3 +56,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.bordered-right {
+  border-bottom: 0.5px solid hsla(0, 0%, 0%, 0.315);
+  border-radius: 0;
+}
+</style>

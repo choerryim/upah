@@ -1,7 +1,7 @@
 <template>
   <q-page class="helper-page">
-    <q-card flat class="column header-content q-mb-lg">
-      <q-card-section class="col row reverse" style="padding-right: 0">
+    <q-card flat class="header-card q-mb-lg">
+      <q-card-section class="row reverse" style="padding-right: 0">
         <q-card
           flat
           class="text-center bg-secondary col-4 role-button row justify-center items-center"
@@ -15,7 +15,7 @@
         </q-card>
       </q-card-section>
 
-      <q-card-section class="col q-ml-md" style="padding-top: 0">
+      <q-card-section class="q-ml-md" style="padding-top: 0">
         <div class="text-h6 text-medium text-white">Welcome, NAME</div>
         <div class="text-body2 text-weight-light text-white">
           What would you like to do today?

@@ -1,5 +1,11 @@
 <template>
-  <q-page class="helper-page">
+  <q-page class="client-page">
+    <q-card flat class="header-content">
+      <div class="text-h6 text-medium text-black text-center q-pa-xl">
+        ACTIVITY
+      </div>
+    </q-card>
+
     <div flat class="my-card q-ma-md">
       <div class="column">
         <div class="text-bold text-body1 q-pb-xs">Title</div>
@@ -14,6 +20,7 @@
         <div class="text-bold text-body1 q-pb-xs">Description</div>
         <q-input
           outlined
+          type="textarea"
           style="background-color: rgba(0, 0, 0, 0.08)"
           class="q-mb-md"
         />

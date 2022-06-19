@@ -110,19 +110,30 @@
 }
 
 .client-page {
-  .clientheader-card {
+  .client-header {
+    position: absolute;
     background-color: $secondary;
+    content: "";
+    height: 16vh;
+    width: 100vw;
     border-radius: 0 0 30px 30px;
+  }
 
-    .clientrole-button {
+  .header-content {
+    z-index: 99999;
+    background-color: transparent;
+    height: 16vh;
+    padding-top: 0.5em;
+
+    .role-button {
       border-radius: 30px 0 0 30px;
 
-      .clientrole-text {
+      .role-text {
         text-shadow: 2px 2px 4px #9e9a9a;
         color: white;
       }
 
-      .clientarrow-text {
+      .arrow-text {
         text-shadow: 1px 1px 4px #adabab;
         color: white;
       }
@@ -148,7 +159,6 @@
 }
 .login-card {
   width: 75%;
-  height: 72vh;
   border-radius: 40px;
   padding: 1.2em;
 }
@@ -180,7 +190,7 @@
 }
 
 .detailsprofile-page {
-  padding: 3em 2.5em 1.5em 1.5em;
+  padding: 3em 2.5em 1.5em 2.5em;
 
   .detailsprofile-card {
     border-radius: 50px 50px 50px 50px;

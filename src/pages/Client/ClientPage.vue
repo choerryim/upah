@@ -1,12 +1,12 @@
 <template>
-  <q-page class="client-page">
-    <q-card flat class="clientheader-card q-mb-lg">
+  <q-page>
+    <q-card flat class="header-content q-mb-lg">
       <q-card-section class="row reverse" style="padding-right: 0">
         <q-card
           flat
-          class="text-center bg-primary col-4 clientrole-button row justify-center items-center"
+          class="text-center bg-primary col-4 role-button row justify-center items-center"
         >
-          <div class="text-h6 clientrole-text">ROLE</div>
+          <div class="text-h6 role-text">ROLE</div>
           <q-icon
             class="text-white arrow-text"
             name="chevron_right"
@@ -36,15 +36,21 @@
       </div>
 
       <div class="row">
-        <q-card flat class="my-card col client-card">
+        <q-card flat class="col client-card">
           <q-card-section>
             <div class="text-body2">Help someone today!</div>
           </q-card-section>
         </q-card>
       </div>
-    </div>
 
-    <upah-card username="Aina Aqilah" description="Cuci tandas" />
+      <div class="q-mt-lg">
+        <div class="q-ml-md text-body2 text-weight-bold text-secondary q-mb-sm">
+          My Upah
+        </div>
+
+        <upah-card username="Aina Aqilah" description="Cuci tandas" />
+      </div>
+    </div>
   </q-page>
 </template>
 <script>

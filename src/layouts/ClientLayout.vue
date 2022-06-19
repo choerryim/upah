@@ -1,5 +1,6 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout class="client-page" view="hHh lpR fFf">
+    <div class="client-header"></div>
     <q-page-container>
       <router-view />
     </q-page-container>

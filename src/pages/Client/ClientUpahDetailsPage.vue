@@ -1,22 +1,18 @@
 <template>
-  <q-page class="helper-page">
-    <q-card flat class="header-content row justify-center">
-      <q-card-section class="row justify-center">
-        <div class="row col-3">
-          <q-avatar style="width: 100%; height: 100%">
+  <q-page>
+    <q-card flat class="header-content row">
+      <q-card-section class="row justify-center items-center">
+        <div class="row col-4">
+          <q-avatar style="width: 90%; height: auto">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
         </div>
 
-        <div class="col">
-          <div class="text-body1 text-bold text-white">Name</div>
-          <q-icon
-            class="star-text arrow-text text-white"
-            name="star"
-            size="xs"
-          />
-          <span class="text-caption q-ml-sm text-white">5.0 (3)</span>
-          <div class="text-body2 q-pt-xs text-white">Joined 2020</div>
+        <div class="col text-black">
+          <div class="text-body1 text-bold">Name</div>
+          <q-icon class="star-text arrow-text" name="star" size="xs" />
+          <span class="text-caption q-ml-sm">5.0 (3)</span>
+          <div class="text-body2 q-pt-xs">Joined 2020</div>
         </div>
       </q-card-section>
     </q-card>
@@ -58,7 +54,7 @@
         RM50
       </q-card-section>
       <q-card-section class="flex flex-center">
-        <q-btn rounded color="primary" label="OFFER A HAND" />
+        <q-btn rounded color="secondary" label="OFFER A HAND" />
       </q-card-section>
     </q-card>
   </q-page>

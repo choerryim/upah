@@ -1,10 +1,10 @@
 <template>
-  <q-page>
+  <q-page class="detailsprofile-page">
     <q-card class="detailsprofile-card">
       <q-card-section>
         <q-card-section class="row justify-center">
           <div class="row col-3">
-            <q-avatar style="width: 100%; height: 100%">
+            <q-avatar style="width: 100%; height: auto">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
             </q-avatar>
           </div>
@@ -29,15 +29,19 @@
       </q-card-section>
     </q-card>
 
-    <q-card-section class="text-bold text-body1 q-pb-sm q-pl-lg q-pt-none">
-      Reviews
-    </q-card-section>
+    <div class="q-mt-lg">
+      <div class="q-mt-md">
+        <div class="text-bold text-body1">Reviews</div>
 
-    <review-card
-      username="Chritsine"
-      review="She is an amazing tutor and my kids love
+        <div class="q-mt-sm">
+          <review-card
+            username="Chritsine"
+            review="She is an amazing tutor and my kids love
 her! Thank you Rose!"
-    />
+          />
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 <script>

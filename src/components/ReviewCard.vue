@@ -1,6 +1,6 @@
 <template>
-  <q-card flat bordered class="review-card q-mx-lg">
-    <q-card-section class="row">
+  <q-card flat bordered class="review-card">
+    <q-card-section class="row q-gutter-sm">
       <div class="col-2">
         <q-avatar>
           <img src="https://cdn.quasar.dev/img/boy-avatar.png" />

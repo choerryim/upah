@@ -5,11 +5,42 @@
         ACTIVITY
       </div>
     </q-card>
-    <upah-card
-      class="q-mt-lg"
-      username="Aina Aqilah"
-      description="Cuci tandas"
-    />
+
+    <q-tabs
+      v-model="tab"
+      dense
+      class="text-grey"
+      active-color="primary"
+      indicator-color="primary"
+      align="justify"
+      narrow-indicator
+    >
+      <q-tab name="PENDING" label="PENDING" />
+      <q-tab name="ACCEPTED" label="ACCEPTED" />
+      <q-tab name="REJECTED" label="REJECTED" />
+    </q-tabs>
+
+    <q-separator />
+
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="PENDING" class="no-padding">
+        <upah-card
+          bottomborder
+          username="Aina Aqilah"
+          description="Cuci tandas"
+        />
+      </q-tab-panel>
+
+      <q-tab-panel name="ACCEPTED">
+        <div class="text-h6">Alarms</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+
+      <q-tab-panel name="REJECTED">
+        <div class="text-h6">Movies</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
 <script>
@@ -19,5 +50,15 @@ export default {
   components: {
     UpahCard,
   },
+  data() {
+    return {
+      tab: "PENDING",
+    };
+  },
 };
 </script>
+<style scoped>
+.no-padding {
+  padding: 0 !important;
+}
+</style>
