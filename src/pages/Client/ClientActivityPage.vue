@@ -5,54 +5,55 @@
         ACTIVITY
       </div>
     </q-card>
+    <q-card>
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab name="pending" label="PENDING" />
+        <q-tab name="accepted" label="ACCEPTED" />
+        <q-tab name="rejected" label="REJECTED" />
+      </q-tabs>
+      <q-separator />
 
-    <q-tabs
-      v-model="tab"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="justify"
-      narrow-indicator
-    >
-      <q-tab name="REQUEST" label="REQUEST" />
-      <q-tab name="ACCEPTED" label="ACCEPTED" />
-      <q-tab name="REJECTED" label="REJECTED" />
-    </q-tabs>
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="pending">
+          <activity-card
+            username="Rose"
+            description="Help me with babysitting my kid for 2 hour"
+            rating="5.0"
+          />
+        </q-tab-panel>
 
-    <q-separator />
+        <q-tab-panel name="rejected">
+          <div class="text-h6">Alarms</div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </q-tab-panel>
 
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="REQUEST" class="no-padding">
-        <upah-card
-          bottomborder
-          username="Aina Aqilah"
-          description="Cuci tandas"
-        />
-      </q-tab-panel>
-
-      <q-tab-panel name="ACCEPTED">
-        <div class="text-h6">Alarms</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </q-tab-panel>
-
-      <q-tab-panel name="REJECTED">
-        <div class="text-h6">Movies</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </q-tab-panel>
-    </q-tab-panels>
+        <q-tab-panel name="accepted">
+          <div class="text-h6">Movies</div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 <script>
-import UpahCard from "components/UpahCard.vue";
+import ActivityCard from "components/ActivityCard.vue";
 
 export default {
   components: {
-    UpahCard,
+    ActivityCard,
   },
+
   data() {
     return {
-      tab: "REQUEST",
+      tab: "pending",
     };
   },
 };

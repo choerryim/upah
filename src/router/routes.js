@@ -24,6 +24,7 @@ const routes = [
         path: "rolepage",
         component: () => import("pages/Login/RolePage.vue"),
       },
+      { path: "mainpage", component: () => import("pages/Login/MainPage.vue") },
     ],
     meta: {
       noAuth: true,
@@ -68,6 +69,14 @@ const routes = [
       {
         path: "clientactivity",
         component: () => import("pages/Client/ClientActivityPage.vue"),
+      },
+      {
+        path: "clientchat",
+        component: () => import("pages/Client/ClientChatPage.vue"),
+      },
+      {
+        path: "clientchatdetails",
+        component: () => import("pages/Client/ClientChatDetailsPage.vue"),
       },
     ],
   },

@@ -54,7 +54,7 @@
         RM50
       </q-card-section>
       <q-card-section class="flex flex-center">
-        <q-btn rounded color="secondary" label="OFFER A HAND" />
+        <q-btn rounded color="secondary" text-color="dark" label="EDIT" />
       </q-card-section>
     </q-card>
   </q-page>

@@ -204,3 +204,35 @@
     margin-top: 1.5em;
   }
 }
+
+.activity-card {
+  border-color: #c4c4c4;
+
+  .viewprofile-text {
+    color: #ff8a00;
+  }
+
+  .price-text {
+    color: #471994;
+  }
+
+  .purplestar-text {
+    color: #471994;
+  }
+
+  .yellowstar-text {
+    color: #ff8a00;
+  }
+
+  .accept-text {
+    color: #00b903;
+  }
+
+  .reject-text {
+    color: #d20404;
+  }
+}
+
+.detailsprofile-card {
+  border-radius: 50px 50px 50px 50px;
+}
