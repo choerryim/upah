@@ -6,21 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-import { initializeApp } from "firebase/app";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDmTTnd6Zr2ftxVa-iCd-p62pggqMXQ_Cs",
-  authDomain: "upah-6ff37.firebaseapp.com",
-  projectId: "upah-6ff37",
-  storageBucket: "upah-6ff37.appspot.com",
-  messagingSenderId: "560457260861",
-  appId: "1:560457260861:web:8fd13f26a08beef28c6f54",
-};
-
-// Initialize Firebase
-initializeApp(firebaseConfig);
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
@@ -55,15 +41,30 @@ export default route(function (/* { store, ssrContext } */) {
   };
 
   Router.beforeEach(async (to, from, next) => {
-    if (to.matched.some((record) => !record.meta.noAuth)) {
-      if (await getCurrentUser()) {
-        next();
+    if (await getCurrentUser()) {
+      if (to.fullPath.includes("/login")) {
+        next("/");
       } else {
-        next("/login");
+        next();
       }
     } else {
-      next();
+      if (to.matched.some((record) => !record.meta.noAuth)) {
+        next("/login");
+      } else {
+        next();
+      }
     }
+
+    // if (to.matched.some((record) => !record.meta.noAuth)) {
+    //   if (await getCurrentUser()) {
+    //       next();
+
+    //   } else {
+    //     next("/login");
+    //   }
+    // } else {
+    //   next();
+    // }
   });
 
   return Router;

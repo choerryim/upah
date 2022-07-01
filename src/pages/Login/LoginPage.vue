@@ -42,7 +42,12 @@
       <q-card-section class="flex column">
         <q-btn @click="onLogin" rounded color="secondary" label="LOGIN" />
         <div class="text-body2 text-center text-grey q-mt-sm">
-          Don't have account? Register!
+          Don't have account?
+          <span
+            class="text-link"
+            @click="$router.push({ name: 'registerpage' })"
+            >Register!</span
+          >
         </div>
       </q-card-section>
     </q-card>

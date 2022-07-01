@@ -55,7 +55,10 @@
       </q-card-section>
       <q-card-section>
         <div class="text-body2 text-center text-grey">
-          Already have an account? Login
+          Already have an account?
+          <span class="text-link" @click="$router.push({ name: 'loginpage' })"
+            >Login</span
+          >
         </div>
       </q-card-section>
     </q-card>
@@ -69,6 +72,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { db } from "src/boot/firebase";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 export default {
   created() {
@@ -126,8 +131,16 @@ export default {
       const auth = getAuth();
       this.showLoading("registering");
       createUserWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           const user = userCredential.user;
+
+          // Add user info into fb
+          await setDoc(doc(db, "User", user.uid), {
+            username: user.displayName,
+            about: "",
+            register_date: Timestamp.fromDate(new Date()),
+            verified: false,
+          });
 
           // TODO: update profile picture to default
           updateProfile(user, { displayName: this.name })

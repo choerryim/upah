@@ -1,4 +1,26 @@
 // app global css in SCSS form
+
+.fullcover {
+  width: 100%;
+  height: 100%;
+}
+
+.text-link {
+  text-decoration: underline;
+  color: blue;
+}
+
+.helper-list-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5em;
+  height: 40vh;
+
+  .upah-container {
+    margin-bottom: 0.5rem;
+  }
+}
+
 .login {
   .bg {
     z-index: -1;
@@ -189,11 +211,145 @@
   }
 }
 
+.hidethis {
+  color: $primary;
+}
+
 .detailsprofile-page {
   padding: 3em 2.5em 1.5em 2.5em;
 
   .detailsprofile-card {
     border-radius: 50px 50px 50px 50px;
+  }
+
+  .edit-button {
+    position: absolute;
+    color: white;
+    right: 0;
+    top: 0;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+
+    .pencil {
+      background-color: $primary;
+    }
+
+    .square {
+      height: 1.5rem;
+      width: 1.5rem;
+      border: 3px solid white;
+      position: absolute;
+      left: -0.5rem;
+      top: 0.5rem;
+    }
+  }
+}
+
+.editprofile-page {
+  display: flex !important;
+  flex-direction: column;
+
+  .save-button {
+    position: absolute;
+    color: white;
+    right: 0;
+    top: 0;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .cancel-button {
+    position: absolute;
+    color: white;
+    left: 0;
+    top: 0;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .editprofile-body {
+    flex: 1 1;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 3rem;
+
+    .scrollarea {
+      flex: 1 1;
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .input {
+          width: 100%;
+          margin-bottom: 0.5rem;
+
+          .text {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+          }
+
+          .scrollarea {
+            width: 100%;
+            height: 7.5rem;
+          }
+
+          .add-photo {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-top: 1rem;
+
+            .highlight-photo-container {
+              position: relative;
+            }
+
+            .delete-photo-button {
+              color: rgb(233, 71, 111);
+              position: absolute;
+              right: 0.2rem;
+              top: -1rem;
+            }
+
+            .highlight-photo {
+              height: 6rem;
+              width: 6rem;
+              border-radius: 15px;
+              margin-right: 0.5rem;
+            }
+
+            .add-photo-button {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 1.5rem;
+              color: rgb(204, 204, 204);
+              border-radius: 10px;
+              border: 2px solid rgb(204, 204, 204);
+              background-color: rgb(247, 247, 247);
+            }
+          }
+        }
+
+        .profilepicture {
+          display: block;
+
+          .change-picture {
+            display: flex;
+            flex-direction: row-reverse;
+            .camera {
+              color: white;
+              top: -7vw;
+              right: 1vw;
+              position: relative;
+              background-color: $primary;
+              padding: 2vw;
+              border-radius: 50px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

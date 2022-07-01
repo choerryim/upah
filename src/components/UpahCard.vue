@@ -13,45 +13,69 @@
       </div>
 
       <div class="col">
-        <div class="text-body1 text-bold">{{ username }}</div>
-        <q-icon class="star-text arrow-text" name="star" size="xs" />
-        <span class="text-caption text-grey q-ml-sm">{{ rating }}</span>
-        <div class="text-body2 q-pt-xs">
-          {{ description }}
+        <div class="text-body1 text-bold">
+          {{ username || "Missing Username" }}
         </div>
-        <span class="text-caption text-grey">{{ date }}</span>
+        <q-icon class="star-text arrow-text" name="star" size="xs" />
+        <span class="text-caption text-grey q-ml-sm">{{
+          upahdetails?.rating
+        }}</span>
+        <div class="text-body2 q-pt-xs">
+          {{ upahdetails?.title }}
+        </div>
+        <span class="text-caption text-grey">{{ formattedDate }}</span>
       </div>
 
       <div class="col-2">
-        <div class="price-text text-h6">RM{{ price }}</div>
+        <div class="price-text text-h6">RM{{ upahdetails?.price }}</div>
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script>
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "src/boot/firebase";
+import dayjs from "dayjs";
+
 export default {
   props: {
     bottomborder: {
       type: Boolean,
       default: false,
     },
-    username: {
-      type: String,
-      default: "Missing name",
+    upahdetails: {
+      type: Object,
+      require: true,
     },
-    description: {
-      type: String,
-      default: "No description",
+  },
+  async created() {
+    await this.getUsername();
+  },
+  data() {
+    return {
+      username: "",
+    };
+  },
+  computed: {
+    formattedDate() {
+      const date = this.upahdetails?.date;
+
+      return dayjs(date).format("DD.MM.YYYY dddd hha");
     },
-    rating: {
-      type: Number,
-      default: 5,
-    },
-    date: Date,
-    price: {
-      type: Number,
-      default: 50,
+  },
+  methods: {
+    async getUsername() {
+      if (!this.upahdetails) return;
+      const docRef = doc(db, "User", this.upahdetails.userid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        this.username = docSnap.data().username;
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
     },
   },
 };

@@ -7,6 +7,7 @@ const routes = [
     children: [
       {
         path: "",
+        name: "loginpage",
         component: () => import("pages/Login/LoginPage.vue"),
         meta: {
           noAuth: true,
@@ -14,15 +15,11 @@ const routes = [
       },
       {
         path: "register",
+        name: "registerpage",
         component: () => import("pages/Login/RegisterPage.vue"),
         meta: {
           noAuth: true,
         },
-      },
-      {
-        name: "rolepage",
-        path: "rolepage",
-        component: () => import("pages/Login/RolePage.vue"),
       },
       { path: "mainpage", component: () => import("pages/Login/MainPage.vue") },
     ],
@@ -34,12 +31,18 @@ const routes = [
     path: "/helper/",
     component: () => import("layouts/HelperLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Helper/HelperPage.vue") },
       {
+        name: "helperpage",
+        path: "",
+        component: () => import("pages/Helper/HelperPage.vue"),
+      },
+      {
+        name: "upahdetailspage",
         path: "upahdetails",
         component: () => import("pages/Helper/UpahDetailsPage.vue"),
       },
       {
+        name: "detailsprofilepage",
         path: "detailsprofile",
         component: () => import("pages/Helper/UpahDetailsProfilePage.vue"),
       },
@@ -48,8 +51,9 @@ const routes = [
         component: () => import("pages/Helper/HelperActivityPage.vue"),
       },
       {
-        path: "userprofile",
-        component: () => import("pages/Helper/UserProfilePage.vue"),
+        name: "usereditprofilepage",
+        path: "usereditprofile",
+        component: () => import("pages/Helper/UserEditProfilePage.vue"),
       },
     ],
   },
@@ -57,7 +61,11 @@ const routes = [
     path: "/client/",
     component: () => import("layouts/ClientLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Client/ClientPage.vue") },
+      {
+        name: "clientpage",
+        path: "",
+        component: () => import("pages/Client/ClientPage.vue"),
+      },
       {
         path: "clientupahdetails",
         component: () => import("pages/Client/ClientUpahDetailsPage.vue"),
@@ -82,8 +90,14 @@ const routes = [
   },
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    component: () => import("layouts/LoginLayout.vue"),
+    children: [
+      {
+        name: "rolepage",
+        path: "",
+        component: () => import("pages/Login/RolePage.vue"),
+      },
+    ],
   },
 
   // Always leave this as last one,
