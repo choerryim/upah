@@ -62,7 +62,7 @@
 <script>
 import UpahCard from "components/UpahCard.vue";
 import { getAuth } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 
 export default {
@@ -75,12 +75,14 @@ export default {
     const user = auth.currentUser;
     if (user !== null) {
       this.username = user.displayName;
+      this.userid = user.uid;
     }
 
     await this.getUpahList();
   },
   data() {
     return {
+      userid: "",
       username: "",
       upahs: [],
     };
@@ -96,7 +98,11 @@ export default {
       });
     },
     async getUpahList() {
-      const querySnapshot = await getDocs(collection(db, "Upah"));
+      const q = query(
+        collection(db, "Upah"),
+        where("userid", "!=", this.userid)
+      );
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const upah = {

@@ -9,10 +9,12 @@
         </div>
 
         <div class="col text-black">
-          <div class="text-body1 text-bold">Name</div>
+          <div class="text-body1 text-bold">{{ formattedName }}</div>
           <q-icon class="star-text arrow-text" name="star" size="xs" />
-          <span class="text-caption q-ml-sm">5.0 (3)</span>
-          <div class="text-body2 q-pt-xs">Joined 2020</div>
+          <span class="text-caption q-ml-sm">
+            {{ formatRating }}
+          </span>
+          <div class="text-body2 q-pt-xs">{{ formattedJoinedDate }}</div>
         </div>
       </q-card-section>
     </q-card>
@@ -22,40 +24,130 @@
         Title
       </q-card-section>
       <q-card-section class="text-lightweight text-body2 q-pt-none">
-        Help me with babysitting my kid for 2 hours
+        {{ upah.title }}
       </q-card-section>
 
       <q-card-section class="text-bold text-body1 q-pb-xs">
         Description
       </q-card-section>
       <q-card-section class="text-lightweight text-body2 q-pt-none">
-        I will have a meeting during the mentioned date and time for 2 hours. I
-        would need a help for you to watch my kid while I am at work.
+        {{ upah.desc }}
       </q-card-section>
 
       <q-card-section class="text-bold text-body1 q-pb-xs">
         Date
       </q-card-section>
       <q-card-section class="text-lightweight text-body2 q-pt-none">
-        25-10-2022
+        {{ date }}
       </q-card-section>
 
       <q-card-section class="text-bold text-body1 q-pb-xs">
         Time
       </q-card-section>
       <q-card-section class="text-lightweight text-body2 q-pt-none">
-        2pm-4pm
+        {{ time }}
       </q-card-section>
 
       <q-card-section class="text-bold text-body1 q-pb-xs">
         Offer
       </q-card-section>
       <q-card-section class="text-lightweight text-body2 q-pt-none">
-        RM50
+        RM {{ upah.price }}
       </q-card-section>
       <q-card-section class="flex flex-center">
-        <q-btn rounded color="secondary" text-color="dark" label="EDIT" />
+        <q-btn
+          rounded
+          color="secondary"
+          text-color="dark"
+          label="EDIT"
+          style="width: 30vw"
+          @click="onEditUpah"
+        />
       </q-card-section>
     </q-card>
   </q-page>
 </template>
+<script>
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "src/boot/firebase";
+import dayjs from "dayjs";
+
+export default {
+  data() {
+    return {
+      upah: {},
+      time: "",
+      date: "",
+      user: {},
+      rating: "",
+    };
+  },
+  computed: {
+    formatRating() {
+      if (!this.user?.rating || !this.user?.total_rating) {
+        return "no rating yet";
+      }
+
+      return `${this.user.rating(this.user.total_rating)}`;
+    },
+    formattedJoinedDate() {
+      if (!this.user?.register_date) {
+        return "";
+      }
+      return `Joined ${dayjs(this.user?.register_date).format("YYYY")}`;
+    },
+    formattedName() {
+      if (!this.user?.username) {
+        return "Missing username";
+      }
+
+      return this.user?.username.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+        letter.toUpperCase()
+      );
+    },
+  },
+  mounted() {
+    const upah = JSON.parse(this.$route.params.upah);
+
+    this.upah = upah;
+    this.time = dayjs(upah.date).format("hh a");
+    this.date = dayjs(upah.date).format("DD - MM - YYYY");
+    this.getUser();
+  },
+  methods: {
+    async getUser() {
+      const docRef = doc(db, "User", this.upah?.userid || "missing id");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        this.user = {
+          ...data,
+          register_date: data.register_date.toDate(),
+        };
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    },
+    onClickProfile() {
+      if (!this.upah?.userid) return;
+
+      this.$router.push({
+        name: "detailsprofilepage",
+        params: { userid: this.upah?.userid },
+      });
+    },
+    onEditUpah() {
+      if (!this.upah) {
+        this.$router.push({ name: "clientpage" });
+      }
+
+      this.$router.push({
+        name: "addupahpage",
+        params: { upah: JSON.stringify(this.upah) },
+      });
+    },
+  },
+};
+</script>

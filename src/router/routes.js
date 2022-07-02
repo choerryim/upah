@@ -67,10 +67,12 @@ const routes = [
         component: () => import("pages/Client/ClientPage.vue"),
       },
       {
+        name: "clientupahdetailspage",
         path: "clientupahdetails",
         component: () => import("pages/Client/ClientUpahDetailsPage.vue"),
       },
       {
+        name: "addupahpage",
         path: "addupah",
         component: () => import("pages/Client/AddUpahPage.vue"),
       },
