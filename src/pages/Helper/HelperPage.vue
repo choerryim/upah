@@ -29,7 +29,7 @@
     <div class="q-ma-md">
       <div class="q-mb-sm">
         <q-img
-          src="https://cdn.quasar.dev/img/parallax2.jpg"
+          :src="banner"
           spinner-color="white"
           style="height: 170px; max-width: 400px"
           img-class="my-custom-image"
@@ -56,7 +56,26 @@
         @click="onClickUpah(upah)"
       />
     </q-scroll-area>
-    <div v-else class="helper-list-container">add empty upah here</div>
+    <div
+      v-else
+      class="q-mb-sm q-mt-md"
+      style="display: flex; flex-direction: column; align-items: center"
+    >
+      <q-img
+        :src="banner_empty"
+        spinner-color="white"
+        style="height: 200px; max-width: 280px"
+        img-class="my-custom-image"
+        class="rounded-borders"
+      >
+      </q-img>
+      <div
+        class="text-weight-medium text-center text-grey-8 q-mt-sm"
+        style="font-size: 1.2rem"
+      >
+        No Upah at this moment, enjoy your time!
+      </div>
+    </div>
   </q-page>
 </template>
 <script>
@@ -79,6 +98,14 @@ export default {
     }
 
     await this.getUpahList();
+  },
+  computed: {
+    banner() {
+      return require("src/assets/helper_main.png");
+    },
+    banner_empty() {
+      return require("src/assets/helper_empty.jpg");
+    },
   },
   data() {
     return {

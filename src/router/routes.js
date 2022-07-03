@@ -47,6 +47,7 @@ const routes = [
         component: () => import("pages/Helper/UpahDetailsProfilePage.vue"),
       },
       {
+        name: "helperactivitypage",
         path: "activity",
         component: () => import("pages/Helper/HelperActivityPage.vue"),
       },
@@ -54,6 +55,11 @@ const routes = [
         name: "usereditprofilepage",
         path: "usereditprofile",
         component: () => import("pages/Helper/UserEditProfilePage.vue"),
+      },
+      {
+        name: "verificationpage",
+        path: "verification",
+        component: () => import("pages/Login/VerificationPage.vue"),
       },
     ],
   },

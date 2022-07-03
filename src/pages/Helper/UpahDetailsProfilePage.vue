@@ -4,7 +4,7 @@
     style="display: flex; flex-direction: column"
   >
     <div
-      v-if="currentuser?.uid === user?.id"
+      v-if="$route.params?.isOwnProfile"
       class="edit-button"
       @click="onClickEdit"
     >
@@ -60,6 +60,14 @@
     >
       No review yet!
     </div> -->
+    <q-btn
+      v-if="$route.params?.isOwnProfile"
+      rounded
+      color="red"
+      label="Logout"
+      class="q-mt-md"
+      @click="onClickLogout"
+    />
   </q-page>
 </template>
 <script>
@@ -67,7 +75,8 @@ import ReviewCard from "components/ReviewCard.vue";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
+import { useQuasar, QSpinnerFacebook } from "quasar";
 
 export default {
   components: {
@@ -75,11 +84,13 @@ export default {
   },
   data() {
     return {
+      $q: null,
       user: {},
       currentuser: "",
     };
   },
   async created() {
+    this.$q = useQuasar();
     const auth = getAuth();
     const currentUser = auth.currentUser;
     this.currentuser = currentUser.uid;
@@ -134,6 +145,37 @@ export default {
         name: "usereditprofilepage",
       });
       // this.$router.push({ name: "usereditprofilepage" });
+    },
+    onClickLogout() {
+      this.$q.loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerColor: "primary",
+        spinnerSize: 140,
+        backgroundColor: "secondary",
+        message: "signing out",
+        messageColor: "black",
+      });
+
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$q.notify({
+            icon: "done",
+            color: "positive",
+            message: "Signed out!",
+          });
+          this.$router.push({ name: "loginpage" });
+        })
+        .catch((error) => {
+          // An error happened.
+          this.$q.notify({
+            color: "negative",
+            message: error.message,
+          });
+        })
+        .finally(() => {
+          this.$q.loading.hide();
+        });
     },
   },
 };

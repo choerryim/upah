@@ -27,11 +27,15 @@
     </q-card>
 
     <div class="q-ma-md">
-      <div class="q-mb-sm">
+      <div
+        v-if="upahs.length > 0"
+        class="q-mb-sm"
+        style="display: flex; justify-content: center"
+      >
         <q-img
-          src="https://cdn.quasar.dev/img/parallax2.jpg"
+          :src="banner"
           spinner-color="white"
-          style="height: 170px; max-width: 400px"
+          style="height: 200px; max-width: 280px"
           img-class="my-custom-image"
           class="rounded-borders"
         >
@@ -45,7 +49,10 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="q-mt-lg q-ml-md text-body2 text-weight-bold text-secondary">
+      <div
+        class="q-mt-lg q-ml-md text-weight-bold text-secondary"
+        style="font-size: 1.2rem"
+      >
         My Upah
       </div>
       <q-scroll-area v-if="upahs.length > 0" class="helper-list-container">
@@ -57,6 +64,26 @@
           @click="onClickUpah(upah)"
         />
       </q-scroll-area>
+      <div
+        v-else
+        class="q-mb-sm q-mt-md"
+        style="display: flex; flex-direction: column; align-items: center"
+      >
+        <q-img
+          :src="banner_empty"
+          spinner-color="white"
+          style="height: 200px; max-width: 280px"
+          img-class="my-custom-image"
+          class="rounded-borders"
+        >
+        </q-img>
+        <div
+          class="text-weight-medium text-center text-grey-8 q-mt-sm"
+          style="font-size: 1.2rem"
+        >
+          Your Upah is empty...
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
@@ -83,6 +110,14 @@ export default {
     }
 
     await this.getUpahList();
+  },
+  computed: {
+    banner() {
+      return require("src/assets/client_main.png");
+    },
+    banner_empty() {
+      return require("src/assets/client_empty.jpg");
+    },
   },
   methods: {
     onClickGoToRole() {

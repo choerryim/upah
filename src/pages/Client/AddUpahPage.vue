@@ -197,7 +197,6 @@ export default {
           message: "Updated new upah!",
         });
       } catch (error) {
-        console.log(error);
         this.$q.notify({
           color: "negative",
           message: error.message,

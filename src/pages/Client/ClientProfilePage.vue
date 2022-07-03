@@ -21,7 +21,9 @@
           </div>
 
           <div class="col">
-            <div class="text-body1 text-bold q-pl-md">{{ formattedName }}</div>
+            <div class="text-body1 text-bold q-pl-md">
+              {{ formattedName }}
+            </div>
             <q-icon
               class="star-text arrow-text q-pl-md"
               name="star"
@@ -32,6 +34,12 @@
               {{ formattedJoinedDate }}
             </div>
           </div>
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+            @click="onClickVerify"
+          />
         </q-card-section>
       </q-card-section>
       <q-card-section class="text-bold text-body1 q-pb-xs q-pl-xl q-pt-none">
@@ -60,6 +68,61 @@
     >
       No review yet!
     </div> -->
+    <q-btn
+      rounded
+      color="red"
+      label="Logout"
+      class="q-mt-md"
+      @click="onClickLogout"
+    />
+
+    <q-dialog v-model="showVerified" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+          />
+          <span class="q-ml-sm">{{
+            user?.verified
+              ? "User is verified!"
+              : "User is not verified. Please be careful and doublecheck before making any agreement"
+          }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Okay" color="blue" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showRequestVerification" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+          />
+          <span class="q-ml-sm"
+            >You are not verified yet, submit now your document for verification
+            checking!</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="blue" v-close-popup />
+          <q-btn
+            flat
+            label="Submit"
+            color="blue"
+            v-close-popup
+            @click="submitVerification"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
@@ -67,7 +130,8 @@ import ReviewCard from "components/ReviewCard.vue";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
+import { useQuasar, QSpinnerFacebook } from "quasar";
 
 export default {
   components: {
@@ -75,11 +139,15 @@ export default {
   },
   data() {
     return {
+      $q: null,
       user: {},
       currentuser: "",
+      showVerified: false,
+      showRequestVerification: false,
     };
   },
   async created() {
+    this.$q = useQuasar();
     const auth = getAuth();
     const currentUser = auth.currentUser;
     this.currentuser = currentUser.uid;
@@ -114,7 +182,6 @@ export default {
       const id = this.$route.params?.isOwnProfile
         ? this.currentuser
         : this.$route.params.userid;
-      console.log(id);
       const docRef = doc(db, "User", id);
       const docSnap = await getDoc(docRef);
 
@@ -134,6 +201,51 @@ export default {
         name: "clienteditprofilepage",
       });
       // this.$router.push({ name: "usereditprofilepage" });
+    },
+    onClickLogout() {
+      this.$q.loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerColor: "primary",
+        spinnerSize: 140,
+        backgroundColor: "secondary",
+        message: "signing out",
+        messageColor: "black",
+      });
+
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$q.notify({
+            icon: "done",
+            color: "positive",
+            message: "Signed out!",
+          });
+          this.$router.push({ name: "loginpage" });
+        })
+        .catch((error) => {
+          // An error happened.
+          this.$q.notify({
+            color: "negative",
+            message: error.message,
+          });
+        })
+        .finally(() => {
+          this.$q.loading.hide();
+        });
+    },
+    onClickVerify() {
+      if (this.$route.params?.isOwnProfile && !this.user?.verified) {
+        this.showRequestVerification = true;
+        return;
+      }
+
+      this.showVerified = true;
+    },
+    submitVerification() {
+      this.$router.push({
+        name: "verificationpage",
+        params: { from: "clientprofilepage" },
+      });
     },
   },
 };

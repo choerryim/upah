@@ -63,13 +63,47 @@
         RM {{ upah.price }}
       </q-card-section>
       <q-card-section class="flex flex-center">
-        <q-btn rounded color="primary" label="OFFER A HAND" />
+        <q-btn
+          rounded
+          color="primary"
+          label="OFFER A HAND"
+          @click="confirmOffer = true"
+        />
       </q-card-section>
     </q-card>
+    <q-dialog v-model="confirmOffer" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="handshake" color="primary" text-color="white" />
+          <span class="q-ml-sm"
+            >Are you sure you want to help
+            {{ this.user?.username || "User" }} ?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-avatar
+            icon="done"
+            color="green"
+            text-color="white"
+            v-close-popup
+            @click="onConfirm"
+          />
+          <q-avatar
+            class="q-ml-sm"
+            icon="close"
+            color="red"
+            text-color="white"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, addDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
 
@@ -81,6 +115,7 @@ export default {
       date: "",
       user: {},
       rating: "",
+      confirmOffer: false,
     };
   },
   computed: {
@@ -137,6 +172,18 @@ export default {
       this.$router.push({
         name: "detailsprofilepage",
         params: { userid: this.upah?.userid },
+      });
+    },
+    async onConfirm() {
+      if (!this.upah) return;
+
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      await addDoc(collection(db, "Request"), {
+        upahid: this.upah.id,
+        clientid: this.upah.userid,
+        helperid: user.uid,
       });
     },
   },

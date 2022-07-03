@@ -25,26 +25,48 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="PENDING" class="no-padding">
         <upah-card
+          class="upah-container"
           bottomborder
-          username="Aina Aqilah"
-          description="Cuci tandas"
+          v-for="upah in upahsRequest"
+          :key="upah.id"
+          :upahdetails="upah"
         />
       </q-tab-panel>
 
       <q-tab-panel name="ACCEPTED">
-        <div class="text-h6">Alarms</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <upah-card
+          class="upah-container"
+          bottomborder
+          v-for="upah in upahsAccept"
+          :key="upah.id"
+          :upahdetails="upah"
+        />
       </q-tab-panel>
 
       <q-tab-panel name="REJECTED">
-        <div class="text-h6">Movies</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <upah-card
+          class="upah-container"
+          bottomborder
+          v-for="upah in upahsReject"
+          :key="upah.id"
+          :upahdetails="upah"
+        />
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
 </template>
 <script>
 import UpahCard from "components/UpahCard.vue";
+import {
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "src/boot/firebase";
+import { getAuth } from "firebase/auth";
 
 export default {
   components: {
@@ -53,7 +75,80 @@ export default {
   data() {
     return {
       tab: "PENDING",
+      user: {},
+      upahsRequest: [],
+      upahsAccept: [],
+      upahsReject: [],
     };
+  },
+  async created() {
+    const auth = getAuth();
+    this.user = auth.currentUser;
+    await this.getRequest();
+    await this.getAccepted();
+    await this.getRejected();
+  },
+  methods: {
+    async getRequest() {
+      const q = query(
+        collection(db, "Request"),
+        where("helperid", "==", this.user?.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (requestdocSnap) => {
+        const docRef = doc(db, "Upah", requestdocSnap.data().upahid);
+        getDoc(docRef).then((docSnap) => {
+          const data = docSnap.data();
+          const upah = {
+            ...data,
+            id: docSnap.id,
+            requestid: requestdocSnap.id,
+          };
+
+          this.upahsRequest.push(upah);
+        });
+      });
+    },
+    async getAccepted() {
+      const q = query(
+        collection(db, "Accepted"),
+        where("helperid", "==", this.user?.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (acceptdocSnap) => {
+        const docRef = doc(db, "Upah", acceptdocSnap.data().upahid);
+        getDoc(docRef).then((docSnap) => {
+          const data = docSnap.data();
+          const upah = {
+            ...data,
+            id: docSnap.id,
+            acceptid: acceptdocSnap.id,
+          };
+
+          this.upahsAccept.push(upah);
+        });
+      });
+    },
+    async getRejected() {
+      const q = query(
+        collection(db, "Rejected"),
+        where("helperid", "==", this.user?.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (rejectdocSnap) => {
+        const docRef = doc(db, "Upah", rejectdocSnap.data().upahid);
+        getDoc(docRef).then((docSnap) => {
+          const data = docSnap.data();
+          const upah = {
+            ...data,
+            id: docSnap.id,
+            rejectid: rejectdocSnap.id,
+          };
+
+          this.upahsReject.push(upah);
+        });
+      });
+    },
   },
 };
 </script>

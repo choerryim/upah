@@ -17,9 +17,9 @@
           {{ username || "Missing Username" }}
         </div>
         <q-icon class="star-text arrow-text" name="star" size="xs" />
-        <span class="text-caption text-grey q-ml-sm">{{
-          upahdetails?.rating
-        }}</span>
+        <span class="text-caption text-grey q-ml-sm">
+          {{ upahdetails?.rating }}</span
+        >
         <div class="text-body2 q-pt-xs">
           {{ upahdetails?.title }}
         </div>

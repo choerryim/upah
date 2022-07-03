@@ -17,7 +17,7 @@
         <q-route-tab name="sms" icon="sms" />
         <q-route-tab to="/client/addupah" name="add" icon="add_box" />
         <q-route-tab to="/client" name="home" icon="home" />
-        <q-route-tab name="list" icon="list_alt" />
+        <q-route-tab to="/client/clientactivity" name="list" icon="list_alt" />
         <q-route-tab
           :to="{
             name: 'clientprofilepage',
@@ -36,7 +36,7 @@
 export default {
   data() {
     return {
-      tab: "mails",
+      tab: "home",
     };
   },
 };

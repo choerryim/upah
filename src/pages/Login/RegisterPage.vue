@@ -136,7 +136,7 @@ export default {
 
           // Add user info into fb
           await setDoc(doc(db, "User", user.uid), {
-            username: user.displayName,
+            username: this.name,
             about: "",
             register_date: Timestamp.fromDate(new Date()),
             verified: false,

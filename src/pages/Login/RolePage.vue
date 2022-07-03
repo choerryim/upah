@@ -13,12 +13,17 @@
         @click="onClickHelp"
       >
         <q-card-section>
-          <q-btn square>
-            <q-avatar size="">
-              <img src="" />
-            </q-avatar>
-          </q-btn>
-          <div class="text-body2 text-center text-grey q-mt-sm">HELP</div>
+          <img
+            :src="helperIcon"
+            class="shadow-3"
+            style="width: 10vh; height: 10vh; border-radius: 20px"
+          />
+          <div
+            class="text-weight-bold text-center text-grey-9 q-mt-sm"
+            style="font-size: 1rem"
+          >
+            HELP
+          </div>
         </q-card-section>
       </q-card>
 
@@ -27,12 +32,15 @@
         @click="onClickFind"
       >
         <q-card-section>
-          <q-btn square>
-            <q-avatar size="">
-              <img src="" />
-            </q-avatar>
-          </q-btn>
-          <div class="text-body2 text-center text-grey q-mt-sm">
+          <img
+            :src="clientIcon"
+            class="shadow-3"
+            style="width: 10vh; height: 10vh; border-radius: 20px"
+          />
+          <div
+            class="text-weight-bold text-center text-grey-9 q-mt-sm"
+            style="font-size: 1rem"
+          >
             FIND HELPER
           </div>
         </q-card-section>
@@ -56,6 +64,14 @@ export default {
     return {
       username: "",
     };
+  },
+  computed: {
+    helperIcon() {
+      return require("src/assets/helphand.png");
+    },
+    clientIcon() {
+      return require("src/assets/findhelp.png");
+    },
   },
   methods: {
     onClickHelp() {
