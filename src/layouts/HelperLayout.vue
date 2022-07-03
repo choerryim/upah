@@ -14,7 +14,7 @@
         class="bg-primary text-white shadow-2"
         :breakpoint="0"
       >
-        <q-route-tab name="sms" icon="sms" />
+        <q-route-tab to="/helper/helperchat" name="sms" icon="sms" />
         <q-route-tab to="/helper" name="home" icon="home" />
         <q-route-tab to="/helper/activity" name="list" icon="list_alt" />
         <q-route-tab

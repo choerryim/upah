@@ -61,6 +61,11 @@ const routes = [
         path: "verification",
         component: () => import("pages/Login/VerificationPage.vue"),
       },
+      {
+        name: "helperchatpage",
+        path: "helperchat",
+        component: () => import("pages/Helper/HelperChatPage.vue"),
+      },
     ],
   },
   {
@@ -87,12 +92,9 @@ const routes = [
         component: () => import("pages/Client/ClientActivityPage.vue"),
       },
       {
+        name: "clientchatpage",
         path: "clientchat",
         component: () => import("pages/Client/ClientChatPage.vue"),
-      },
-      {
-        path: "clientchatdetails",
-        component: () => import("pages/Client/ClientChatDetailsPage.vue"),
       },
       {
         name: "clientprofilepage",
@@ -114,6 +116,11 @@ const routes = [
         name: "rolepage",
         path: "",
         component: () => import("pages/Login/RolePage.vue"),
+      },
+      {
+        name: "chatpage",
+        path: "clientchatdetails",
+        component: () => import("pages/Client/ClientChatDetailsPage.vue"),
       },
     ],
   },

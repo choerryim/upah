@@ -14,7 +14,7 @@
         class="bg-secondary text-grey shadow-2"
         :breakpoint="0"
       >
-        <q-route-tab name="sms" icon="sms" />
+        <q-route-tab to="/client/clientchat" name="sms" icon="sms" />
         <q-route-tab to="/client/addupah" name="add" icon="add_box" />
         <q-route-tab to="/client" name="home" icon="home" />
         <q-route-tab to="/client/clientactivity" name="list" icon="list_alt" />

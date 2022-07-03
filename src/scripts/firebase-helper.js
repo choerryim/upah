@@ -25,6 +25,26 @@ async function getProfilePicture(userid) {
   return res;
 }
 
+async function getProfilePictureURL(userid) {
+  const storage = getStorage();
+  if (!userid) {
+    const auth = getAuth();
+    userid = auth.currentUser.uid;
+  }
+
+  let res = "";
+
+  try {
+    const path = `/UserProfilePicture/profile-${userid}`;
+    res = await getDownloadURL(ref(storage, path));
+  } catch (e) {
+    const path = `/UserProfilePicture/upah_default_profile.jpg`;
+    res = await getDownloadURL(ref(storage, path));
+  }
+
+  return res;
+}
+
 async function getPicture(path) {
   try {
     const storage = getStorage();
@@ -119,4 +139,5 @@ export {
   uploadHighlightImage,
   getPicture,
   fetchHighlightImage,
+  getProfilePictureURL,
 };

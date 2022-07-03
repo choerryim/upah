@@ -4,7 +4,7 @@
       <q-card-section class="row justify-center items-center">
         <div class="row col-4">
           <q-avatar style="width: 90%; height: auto">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img :src="profilepictureurl" />
           </q-avatar>
         </div>
 
@@ -71,6 +71,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
+import { getProfilePictureURL } from "src/scripts/firebase-helper";
 
 export default {
   data() {
@@ -80,6 +81,7 @@ export default {
       date: "",
       user: {},
       rating: "",
+      profilepictureurl: "",
     };
   },
   computed: {
@@ -106,7 +108,14 @@ export default {
       );
     },
   },
+  async created() {
+    this.profilepictureurl = await getProfilePictureURL();
+  },
   mounted() {
+    if (!this.$route.params?.upah) {
+      this.$router.push({ name: "clientpage" });
+      return;
+    }
     const upah = JSON.parse(this.$route.params.upah);
 
     this.upah = upah;

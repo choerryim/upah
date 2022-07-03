@@ -36,6 +36,7 @@
       <q-tab-panel name="ACCEPTED">
         <upah-card
           class="upah-container"
+          :showchat="true"
           bottomborder
           v-for="upah in upahsAccept"
           :key="upah.id"
@@ -103,6 +104,7 @@ export default {
             ...data,
             id: docSnap.id,
             requestid: requestdocSnap.id,
+            helperid: this.user?.uid,
           };
 
           this.upahsRequest.push(upah);
@@ -111,7 +113,7 @@ export default {
     },
     async getAccepted() {
       const q = query(
-        collection(db, "Accepted"),
+        collection(db, "Accept"),
         where("helperid", "==", this.user?.uid)
       );
       const querySnapshot = await getDocs(q);
@@ -123,6 +125,7 @@ export default {
             ...data,
             id: docSnap.id,
             acceptid: acceptdocSnap.id,
+            helperid: this.user?.uid,
           };
 
           this.upahsAccept.push(upah);
@@ -131,7 +134,7 @@ export default {
     },
     async getRejected() {
       const q = query(
-        collection(db, "Rejected"),
+        collection(db, "Reject"),
         where("helperid", "==", this.user?.uid)
       );
       const querySnapshot = await getDocs(q);
@@ -143,6 +146,7 @@ export default {
             ...data,
             id: docSnap.id,
             rejectid: rejectdocSnap.id,
+            helperid: this.user?.uid,
           };
 
           this.upahsReject.push(upah);

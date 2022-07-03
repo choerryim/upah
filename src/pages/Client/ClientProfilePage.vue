@@ -16,7 +16,7 @@
         <q-card-section class="row justify-center">
           <div class="row col-3">
             <q-avatar style="width: 100%; height: 100%">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <img :src="profilepictureurl" />
             </q-avatar>
           </div>
 
@@ -49,6 +49,29 @@
         {{ user.about || "Hello there :)" }}
       </q-card-section>
     </q-card>
+
+    <div class="input q-mt-md">
+      <div class="text-weight-bold q-mb-sm" style="font-size: 1.1rem">
+        Photos
+      </div>
+      <q-scroll-area style="height: 7rem">
+        <div style="display: flex; flex-wrap: no-wrap">
+          <q-img
+            v-for="image in imageFiles"
+            :key="image.file.name"
+            :src="image.url"
+            spinner-color="white"
+            class="highlight-photo shadow-2"
+            style="
+              height: 6rem;
+              width: 6rem;
+              border-radius: 15px;
+              margin-right: 0.5rem;
+            "
+          /></div
+      ></q-scroll-area>
+      <div class=""></div>
+    </div>
 
     <q-card-section class="text-bold text-body1"> Reviews </q-card-section>
     <div class="fullcover" style="display: flex; flex: 1 1">
@@ -132,6 +155,10 @@ import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
 import { getAuth, signOut } from "firebase/auth";
 import { useQuasar, QSpinnerFacebook } from "quasar";
+import {
+  getProfilePictureURL,
+  fetchHighlightImage,
+} from "src/scripts/firebase-helper";
 
 export default {
   components: {
@@ -143,10 +170,15 @@ export default {
       user: {},
       currentuser: "",
       showVerified: false,
+      imageFiles: [],
       showRequestVerification: false,
+      profilepictureurl: "",
     };
   },
   async created() {
+    await this.setupHighlightImage();
+    console.log(this.imageFiles);
+    this.profilepictureurl = await getProfilePictureURL();
     this.$q = useQuasar();
     const auth = getAuth();
     const currentUser = auth.currentUser;
@@ -178,6 +210,29 @@ export default {
     },
   },
   methods: {
+    async setupHighlightImage() {
+      const highlightImages = await fetchHighlightImage();
+      if (!highlightImages?.length) {
+        return;
+      }
+      this.updateImage(highlightImages);
+    },
+    updateImage(files) {
+      if (files.length === 0) {
+        return;
+      }
+
+      for (const file of files) {
+        if (
+          this.imageFiles.filter((item) => item.name === file.name).length > 0
+        )
+          continue;
+        this.imageFiles.push({
+          file: file,
+          url: URL.createObjectURL(file),
+        });
+      }
+    },
     async getUserDetails() {
       const id = this.$route.params?.isOwnProfile
         ? this.currentuser

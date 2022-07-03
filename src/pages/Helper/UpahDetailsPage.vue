@@ -3,8 +3,8 @@
     <q-card flat class="header-content row" @click="onClickProfile">
       <q-card-section class="row justify-center items-center">
         <div class="row col-4 q-mr-lg">
-          <q-avatar style="width: 100%; height: auto">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          <q-avatar style="width: 20vw; height: 20vw">
+            <img :src="profilepictureurl" />
           </q-avatar>
         </div>
 
@@ -106,6 +106,7 @@ import { doc, getDoc, collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
+import { getProfilePictureURL } from "src/scripts/firebase-helper";
 
 export default {
   data() {
@@ -116,6 +117,7 @@ export default {
       user: {},
       rating: "",
       confirmOffer: false,
+      profilepictureurl: "",
     };
   },
   computed: {
@@ -142,9 +144,15 @@ export default {
       );
     },
   },
-  mounted() {
-    const upah = JSON.parse(this.$route.params.upah);
+  async created() {},
+  async mounted() {
+    if (!this.$route.params?.upah) {
+      this.$router.push({ name: "helperpage" });
+      return;
+    }
 
+    const upah = JSON.parse(this.$route.params.upah);
+    this.profilepictureurl = await getProfilePictureURL(upah.userid);
     this.upah = upah;
     this.time = upah.time;
     this.date = dayjs(upah.date).format("DD - MM - YYYY");

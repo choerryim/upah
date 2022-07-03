@@ -16,7 +16,7 @@
         <q-card-section class="row justify-center">
           <div class="row col-3">
             <q-avatar style="width: 100%; height: 100%">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <img :src="profilepictureurl" />
             </q-avatar>
           </div>
 
@@ -77,6 +77,7 @@ import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
 import { getAuth, signOut } from "firebase/auth";
 import { useQuasar, QSpinnerFacebook } from "quasar";
+import { getProfilePictureURL } from "src/scripts/firebase-helper";
 
 export default {
   components: {
@@ -87,9 +88,11 @@ export default {
       $q: null,
       user: {},
       currentuser: "",
+      profilepictureurl: "",
     };
   },
   async created() {
+    this.profilepictureurl = await getProfilePictureURL();
     this.$q = useQuasar();
     const auth = getAuth();
     const currentUser = auth.currentUser;

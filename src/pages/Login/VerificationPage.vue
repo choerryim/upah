@@ -80,7 +80,9 @@
                 />
               </div>
             </q-scroll-area>
-            <div class=""></div>
+            <div v-if="showErrorDocs" class="text-red">
+              The picture docs must have a minimum of 2!
+            </div>
           </div>
         </div>
         <div class="flex flex-center q-mt-lg">
@@ -105,7 +107,7 @@
   </q-page>
 </template>
 <script>
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -116,6 +118,7 @@ import {
   fetchHighlightImage,
 } from "src/scripts/firebase-helper";
 import { useQuasar, QSpinnerFacebook } from "quasar";
+import { forEach } from "lodash";
 
 export default {
   components: {},
@@ -128,6 +131,7 @@ export default {
         ic: "",
         address: "",
       },
+      showErrorDocs: false,
       validation: {
         required: (val) => {
           return !!val || "Field must not be empty!";
@@ -165,30 +169,36 @@ export default {
       });
     },
     async onClickSubmit() {
-      this.showLoading("registering");
+      const iIC = this.$refs["iIC"];
+      const iAddress = this.$refs["iAddress"];
 
-      if (this.profileImage.file) {
-        const storage = getStorage();
-        const path = `UserProfilePicture/profile-${this.currentuser}`;
-        const storageRef = ref(storage, path);
-        uploadBytes(storageRef, this.profileImage.file).then((snapshot) => {});
+      iIC.validate();
+      iAddress.validate();
+
+      let hasError = iIC.hasError || iAddress.hasError;
+
+      if (this.imageFiles.length < 2) {
+        hasError = true;
+        this.showErrorDocs = true;
+      } else {
+        this.showErrorDocs = false;
       }
 
-      const auth = getAuth();
-      const userRef = doc(db, "User", auth.currentUser.uid);
-      updateProfile(auth.currentUser, {
-        displayName: this.input.username,
-      })
-        .then(async () => {})
-        .catch((error) => {})
-        .finally(() => {});
+      if (hasError) return;
 
-      await updateDoc(userRef, {
-        about: this.input.about,
-        username: this.input.username,
+      this.showLoading("uploading");
+
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      // Add a new document with a generated id.
+      await addDoc(collection(db, "Verification"), {
+        userid: user.uid,
+        address: this.input.address,
+        icnumber: this.input.ic,
       });
 
-      uploadHighlightImage(this.imageFiles || [], auth.currentUser.uid);
+      // uploadHighlightImage(this.imageFiles || [], auth.currentUser.uid);
 
       this.$q.loading.hide();
       this.$q.notify({
