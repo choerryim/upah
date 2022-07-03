@@ -88,6 +88,16 @@ const routes = [
         path: "clientchatdetails",
         component: () => import("pages/Client/ClientChatDetailsPage.vue"),
       },
+      {
+        name: "clientprofilepage",
+        path: "clientprofile",
+        component: () => import("pages/Client/ClientProfilePage.vue"),
+      },
+      {
+        name: "clienteditprofilepage",
+        path: "clienteditprofile",
+        component: () => import("pages/Client/ClientUserEditProfilePage.vue"),
+      },
     ],
   },
   {

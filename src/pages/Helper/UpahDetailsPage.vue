@@ -111,7 +111,7 @@ export default {
     const upah = JSON.parse(this.$route.params.upah);
 
     this.upah = upah;
-    this.time = dayjs(upah.date).format("hh a");
+    this.time = upah.time;
     this.date = dayjs(upah.date).format("DD - MM - YYYY");
     this.getUser();
   },

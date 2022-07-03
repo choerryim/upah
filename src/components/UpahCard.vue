@@ -35,6 +35,7 @@
 
 <script>
 import { doc, getDoc } from "firebase/firestore";
+import customFormat from "dayjs/plugin/customParseFormat";
 import { db } from "src/boot/firebase";
 import dayjs from "dayjs";
 
@@ -50,6 +51,7 @@ export default {
     },
   },
   async created() {
+    dayjs.extend(customFormat);
     await this.getUsername();
   },
   data() {
@@ -59,9 +61,10 @@ export default {
   },
   computed: {
     formattedDate() {
-      const date = this.upahdetails?.date;
-
-      return dayjs(date).format("DD.MM.YYYY dddd hha");
+      const date = `${this.upahdetails?.date} ${this.upahdetails?.time}`;
+      return dayjs(date, "YYYY/MM/DD hh.mm a").format(
+        "DD.MM.YYYY dddd hh.mm a"
+      );
     },
   },
   methods: {

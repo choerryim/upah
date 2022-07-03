@@ -108,7 +108,6 @@ export default {
         const upah = {
           ...data,
           id: doc.id,
-          date: data.date.toDate(),
         };
 
         this.upahs.push(upah);
