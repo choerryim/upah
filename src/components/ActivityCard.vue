@@ -8,7 +8,7 @@
     <q-card-section class="row">
       <div class="col-2">
         <q-avatar>
-          <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          <img :src="profilepictureurl" />
         </q-avatar>
       </div>
 
@@ -18,7 +18,12 @@
             {{ username || "Missing Username" }}
           </div>
           <div class="col-4.5">
-            <div class="viewprofile-text text-body2">VIEW PROFILE</div>
+            <div
+              class="viewprofile-text text-body2"
+              @click="onClickViewProfile"
+            >
+              VIEW PROFILE
+            </div>
           </div>
         </div>
         <q-icon class="yellowstar-text arrow-text" name="star" size="xs" />
@@ -49,7 +54,7 @@
               class="reject-text"
               name="close"
               size="md"
-              @click="onClickAccept"
+              @click="onClickReject"
             />
           </div>
         </div>
@@ -72,7 +77,9 @@ import {
 } from "firebase/firestore";
 import customFormat from "dayjs/plugin/customParseFormat";
 import { db } from "src/boot/firebase";
+import { getAuth } from "firebase/auth";
 import dayjs from "dayjs";
+import { getProfilePictureURL } from "src/scripts/firebase-helper";
 
 export default {
   props: {
@@ -94,12 +101,17 @@ export default {
     },
   },
   async created() {
+    this.profilepictureurl = await getProfilePictureURL(
+      this.upahdetails.helperid
+    );
     dayjs.extend(customFormat);
+
     await this.getUsername();
   },
   data() {
     return {
       username: "",
+      profilepictureurl: "",
     };
   },
   computed: {
@@ -140,6 +152,8 @@ export default {
       });
 
       await deleteDoc(doc(db, "Request", this.upahdetails.requestid));
+
+      this.$router.push({ name: "clientpage" });
     },
     async onClickReject() {
       await addDoc(collection(db, "Reject"), {
@@ -149,6 +163,8 @@ export default {
       });
 
       await deleteDoc(doc(db, "Request", this.upahdetails.requestid));
+
+      this.$router.push({ name: "clientpage" });
     },
     async onClickChat() {
       await this.getChats();
@@ -164,13 +180,16 @@ export default {
       // time: "05.03 am"
       // title: "Take care Balls"
       // userid: "Hc9cYk8xz1MJdKc1lpW0VKdF9ms1"
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-      const userid = this.upahdetails.userid;
+      const userid = this.upahdetails.userid || user.uid;
 
       const q = query(
         collection(db, "Chats"),
         where("chatters", "array-contains", userid)
       );
+
       const querySnapshot = await getDocs(q);
       const chats = [];
       querySnapshot.forEach((doc) => {
@@ -182,6 +201,7 @@ export default {
       });
 
       const friendid = this.upahdetails.helperid;
+
       const current_chat = chats.filter((item) => {
         return item.chatters.includes(friendid);
       })?.[0];
@@ -208,6 +228,14 @@ export default {
       this.$router.push({
         name: "chatpage",
         params: { chatid: docRef.id, friendName: this.username },
+      });
+    },
+    onClickViewProfile() {
+      this.$router.push({
+        name: "clientprofilepage",
+        params: {
+          userid: this.upahdetails.helperid,
+        },
       });
     },
   },

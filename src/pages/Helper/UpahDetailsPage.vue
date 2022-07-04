@@ -193,6 +193,8 @@ export default {
         clientid: this.upah.userid,
         helperid: user.uid,
       });
+
+      this.$router.push({ name: "helperactivitypage" });
     },
   },
 };

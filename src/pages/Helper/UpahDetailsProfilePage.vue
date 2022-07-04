@@ -32,6 +32,12 @@
               {{ formattedJoinedDate }}
             </div>
           </div>
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+            @click="onClickVerify"
+          />
         </q-card-section>
       </q-card-section>
       <q-card-section class="text-bold text-body1 q-pb-xs q-pl-xl q-pt-none">
@@ -44,7 +50,7 @@
 
     <q-card-section class="text-bold text-body1"> Reviews </q-card-section>
     <div class="fullcover" style="display: flex; flex: 1 1">
-      <q-scroll-area style="flex: 1 1">
+      <!-- <q-scroll-area style="flex: 1 1">
         <review-card
           v-for="x in 10"
           :key="x"
@@ -52,7 +58,7 @@
           review="baik pak"
           style="margin-bottom: 0.5rem"
         />
-      </q-scroll-area>
+      </q-scroll-area> -->
     </div>
     <!-- <div
       class="fullcover"
@@ -68,6 +74,53 @@
       class="q-mt-md"
       @click="onClickLogout"
     />
+    <q-dialog v-model="showVerified" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+          />
+          <span class="q-ml-sm">{{
+            user?.verified
+              ? "User is verified!"
+              : "User is not verified. Please be careful and doublecheck before making any agreement"
+          }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Okay" color="blue" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showRequestVerification" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-icon
+            class="text-blue star-text arrow-text q-pl-md"
+            :name="user?.verified ? 'verified_user' : 'gpp_bad'"
+            size="md"
+          />
+          <span class="q-ml-sm"
+            >You are not verified yet, submit now your document for verification
+            checking!</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="blue" v-close-popup />
+          <q-btn
+            flat
+            label="Submit"
+            color="blue"
+            v-close-popup
+            @click="submitVerification"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
@@ -81,7 +134,7 @@ import { getProfilePictureURL } from "src/scripts/firebase-helper";
 
 export default {
   components: {
-    ReviewCard,
+    // ReviewCard,
   },
   data() {
     return {
@@ -89,6 +142,8 @@ export default {
       user: {},
       currentuser: "",
       profilepictureurl: "",
+      showRequestVerification: false,
+      showVerified: false,
     };
   },
   async created() {
@@ -128,6 +183,11 @@ export default {
       const id = this.$route.params?.isOwnProfile
         ? this.currentuser
         : this.$route.params.userid;
+
+      if (!id) {
+        this.$router.push({ name: "helperpage" });
+        return;
+      }
 
       const docRef = doc(db, "User", id);
       const docSnap = await getDoc(docRef);
@@ -179,6 +239,20 @@ export default {
         .finally(() => {
           this.$q.loading.hide();
         });
+    },
+    onClickVerify() {
+      if (this.$route.params?.isOwnProfile && !this.user?.verified) {
+        this.showRequestVerification = true;
+        return;
+      }
+
+      this.showVerified = true;
+    },
+    submitVerification() {
+      this.$router.push({
+        name: "verificationpage",
+        params: { from: "detailsprofilepage" },
+      });
     },
   },
 };

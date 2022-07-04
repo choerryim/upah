@@ -4,7 +4,7 @@
     style="display: flex; flex-direction: column"
   >
     <div
-      v-if="currentuser?.uid === user?.id"
+      v-if="$route.params?.isOwnProfile"
       class="edit-button"
       @click="onClickEdit"
     >
@@ -76,13 +76,13 @@
     <q-card-section class="text-bold text-body1"> Reviews </q-card-section>
     <div class="fullcover" style="display: flex; flex: 1 1">
       <q-scroll-area style="flex: 1 1">
-        <review-card
+        <!-- <review-card
           v-for="x in 10"
           :key="x"
           username="Mirooon"
           review="baik pak"
           style="margin-bottom: 0.5rem"
-        />
+        /> -->
       </q-scroll-area>
     </div>
     <!-- <div
@@ -97,6 +97,7 @@
       label="Logout"
       class="q-mt-md"
       @click="onClickLogout"
+      v-if="$route.params?.isOwnProfile"
     />
 
     <q-dialog v-model="showVerified" persistent>
@@ -162,7 +163,7 @@ import {
 
 export default {
   components: {
-    ReviewCard,
+    // ReviewCard,
   },
   data() {
     return {
@@ -177,8 +178,9 @@ export default {
   },
   async created() {
     await this.setupHighlightImage();
-    console.log(this.imageFiles);
-    this.profilepictureurl = await getProfilePictureURL();
+    this.profilepictureurl = await getProfilePictureURL(
+      this.$route.params.userid || ""
+    );
     this.$q = useQuasar();
     const auth = getAuth();
     const currentUser = auth.currentUser;
@@ -237,6 +239,12 @@ export default {
       const id = this.$route.params?.isOwnProfile
         ? this.currentuser
         : this.$route.params.userid;
+
+      if (!id) {
+        this.$router.push({ name: "clientpage" });
+        return;
+      }
+
       const docRef = doc(db, "User", id);
       const docSnap = await getDoc(docRef);
 
